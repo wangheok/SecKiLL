@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fj.dao.SuccessKilledDao">
+
+    <!--Error happens when primary conflict: by keyword "ignore"-->
+    <insert id="insertSuccessKilled">
+        INSERT ignore INTO success_killed (seckill_id, user_mobile, state)
+        VALUES (#{secKillId}, #{userMobile}, 0)
+    </insert>
+
+    <!-- SuccessKilled queryByIdWithSeckill(@Param("seckilledId") long seckilledId, @Param("userPhone") long userPhone);-->
+    <!---->
+    <select id="queryByIdWithSecKill" resultType="SuccessKilled">
+        SELECT
+          sk.seckill_id ,
+          sk.user_mobile,
+          sk.create_time,
+          sk.state,
+          s.seckill_id "secKill.seckill_id",
+          s.name "secKill.name",
+          s.number "secKill.number",
+          s.start_time "secKill.start_time",
+          s.end_time "secKill.end_time",
+          s.create_time "secKill.create_time"
+        FROM
+        success_killed sk INNER JOIN seckill s
+        ON sk.seckill_id = s.seckill_id
+        WHERE sk.seckill_id = #{secKillId}
+        AND sk.user_mobile = #{userMobile}
+    </select>
+
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--Config and reorganize MyBatis-->
+    <!--1. Database settings-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--2. Database connection Pool-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--Properties of connection pool-->
+        <property name="driverClass" value="${jdbc.driver}"></property>
+        <property name="jdbcUrl" value="${jdbc.url}"></property>
+        <property name="user" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        <!--c3p0 private properties-->
+        <!--At most 30 connections to the database-->
+        <property name="maxPoolSize" value="30"></property>
+        <property name="minPoolSize" value="10"></property>
+        <!--Disable automatically commit action after close connection-->
+        <property name="autoCommitOnClose" value="false"></property>
+        <!--Getting the time of timeout-->
+        <property name="checkoutTimeout" value="1000"></property>
+        <!--Retrying times when failed to get the connection-->
+        <property name="acquireRetryAttempts" value="2"></property>
+    </bean>
+
+    <!--3. SqlSessionFactory configuration-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--Database connection pool injection-->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--Configuration of MyBatis global config file (classpath: under java folder or resources folder)-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <!--Scanning entity, use alias com.fj.entity.SecKill -> SecKill-->
+        <property name="typeAliasesPackage" value="com.fj.entity"></property>
+        <!--Scanning SQL config XML files: required by mapper-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+    </bean>
+
+    <!--4. Scanning Dao interface packages Config: Implement Dao interfaces and inject into Spring container-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--SqlSessionFactory Injection-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+        <!--Providing to be scanned packages of Dao -->
+        <property name="basePackage" value="com.fj.dao"></property>
+    </bean>
+
+</beans>

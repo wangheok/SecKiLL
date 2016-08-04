@@ -34,7 +34,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springfr
         <property name="dataSource" ref="dataSource"></property>
         <!--Configuration of MyBatis global config file (classpath: under java folder or resources folder)-->
         <property name="configLocation" value="classpath:mybatis-config.xml"></property>
-        <!--Scanning entity, use alias com.fj.entity.SecKill -> SecKill-->
+        <!--Scanning entity, use Alias com.fj.entity.SecKill -> SecKill-->
         <property name="typeAliasesPackage" value="com.fj.entity"></property>
         <!--Scanning SQL config XML files: required by mapper-->
         <property name="mapperLocations" value="classpath:mapper/*.xml"></property>

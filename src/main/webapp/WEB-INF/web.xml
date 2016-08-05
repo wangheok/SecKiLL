@@ -6,4 +6,23 @@
          metadata-complete="true">
     <!--修改servlet版本为3.1-->
 
+    <!--DispatcherServlet Config-->
+    <servlet>
+        <servlet-name>secKill-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--
+            Required config files by Spring MVC:
+            spring-dao.xml, spring-service.xml, spring-web.xml
+            MyBatis -> spring -> springMVC
+        -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/spring-*.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>secKill-dispatcher</servlet-name>
+        <!--Mapping all requests by default-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 </web-app>

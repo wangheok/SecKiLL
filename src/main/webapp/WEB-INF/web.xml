@@ -5,10 +5,9 @@
          version="3.1"
          metadata-complete="true">
     <!--修改servlet版本为3.1-->
-
     <!--DispatcherServlet Config-->
     <servlet>
-        <servlet-name>secKill-dispatcher</servlet-name>
+        <servlet-name>dispatcherServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <!--
             Required config files by Spring MVC:
@@ -21,7 +20,7 @@
         </init-param>
     </servlet>
     <servlet-mapping>
-        <servlet-name>secKill-dispatcher</servlet-name>
+        <servlet-name>dispatcherServlet</servlet-name>
         <!--Mapping all requests by default-->
         <url-pattern>/</url-pattern>
     </servlet-mapping>

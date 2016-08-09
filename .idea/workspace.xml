@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e764b819-96ae-44ad-84a5-d40c81d09be4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/fj/web/SecKillController.class" afterPath="$PROJECT_DIR$/target/classes/com/fj/web/SecKillController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/seckill.war" afterPath="$PROJECT_DIR$/target/seckill.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/seckill/WEB-INF/classes/com/fj/web/SecKillController.class" afterPath="$PROJECT_DIR$/target/seckill/WEB-INF/classes/com/fj/web/SecKillController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/fj/web/SecKillController.java" afterPath="$PROJECT_DIR$/src/main/java/com/fj/web/SecKillController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/spring/spring-dao.xml" afterPath="$PROJECT_DIR$/src/main/resources/spring/spring-dao.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/list.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/list.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/script/seckill.js" afterPath="$PROJECT_DIR$/src/main/webapp/resources/script/seckill.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/seckill/index.jsp" afterPath="$PROJECT_DIR$/target/seckill/index.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/seckill/resources/script/seckill.js" afterPath="$PROJECT_DIR$/target/seckill/resources/script/seckill.js" />
-    </list>
+    <list default="true" id="e764b819-96ae-44ad-84a5-d40c81d09be4" name="Default" comment="" />
     <ignored path="seckill.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -101,8 +89,8 @@
       <file leaf-file-name="SecKillServiceImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fj/service/impl/SecKillServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="67" column="36" selection-start-line="67" selection-start-column="36" selection-end-line="67" selection-end-column="36" />
+            <state relative-caret-position="220">
+              <caret line="70" column="7" selection-start-line="70" selection-start-column="7" selection-end-line="70" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -1883,7 +1871,7 @@
       <workItem from="1470107496230" duration="2323000" />
       <workItem from="1470110706794" duration="32866000" />
       <workItem from="1470604177383" duration="12386000" />
-      <workItem from="1470617094114" duration="21543000" />
+      <workItem from="1470617094114" duration="21648000" />
     </task>
     <servers />
   </component>
@@ -1920,7 +1908,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69118000" />
+    <option name="totallyTimeSpent" value="69223000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2388,8 +2376,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fj/service/impl/SecKillServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="67" column="36" selection-start-line="67" selection-start-column="36" selection-end-line="67" selection-end-column="36" />
+        <state relative-caret-position="220">
+          <caret line="70" column="7" selection-start-line="70" selection-start-column="7" selection-end-line="70" selection-end-column="7" />
           <folding />
         </state>
       </provider>

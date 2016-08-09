@@ -65,7 +65,7 @@ public class SecKillController {
             method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public SecKillResult<Exposer> exposer(Long secKillId) {
+    public SecKillResult<Exposer> exposer(@PathVariable("seckillId") Long secKillId) {
 
         SecKillResult<Exposer> result;
         try {
@@ -92,7 +92,7 @@ public class SecKillController {
     @ResponseBody
     public SecKillResult<SecKillExecution> execute(@PathVariable("seckillId") Long secKillId,
                                                    @PathVariable("md5") String md5,
-                                                   @CookieValue(value = "killPhone", required = false) Long mobile) {
+                                                   @CookieValue(value = "killMobile", required = false) Long mobile) {
 
         if (mobile == null) {
 
@@ -106,14 +106,14 @@ public class SecKillController {
 
         } catch (RepeatKillException e1) {
             SecKillExecution execution = new SecKillExecution(secKillId, SecKillStateEnum.REPEAT_PURCHASE);
-            return new SecKillResult<SecKillExecution>(false, execution);
+            return new SecKillResult<SecKillExecution>(true, execution);
         } catch (SecKillCloseException e2) {
             SecKillExecution execution = new SecKillExecution(secKillId, SecKillStateEnum.END);
-            return new SecKillResult<SecKillExecution>(false, execution);
+            return new SecKillResult<SecKillExecution>(true, execution);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             SecKillExecution execution = new SecKillExecution(secKillId, SecKillStateEnum.INNER_ERROR);
-            return new SecKillResult<SecKillExecution>(false, execution);
+            return new SecKillResult<SecKillExecution>(true, execution);
         }
     }
 
@@ -123,6 +123,7 @@ public class SecKillController {
      * @return
      */
     @RequestMapping(value = "/time/now", method = RequestMethod.GET)
+    @ResponseBody
     public SecKillResult<Long> time() {
 
         Date now = new Date();

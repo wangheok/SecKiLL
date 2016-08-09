@@ -1,5 +1,5 @@
 <html>
 <body>
-<h2>Hello World!</h2>
+<a href="/seckill/list">SecKill List</a>
 </body>
 </html>

@@ -43,7 +43,7 @@
                                             pattern="yyyy-MM-dd HH:mm:ss"/>
                         </td>
                         <td>
-                            <a class="btn btn-info" href="/seckill/${secKill.secKillId}/detail" target="_blank">Link</a>
+                            <a class="btn btn-info" href="/seckill/${secKill.secKillId}/detail" target="_blank">Detail</a>
                         </td>
                     </tr>
 

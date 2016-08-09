@@ -8,7 +8,6 @@ http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springfr
     <!--Config and reorganize MyBatis-->
     <!--1. Database settings-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
-
     <!--2. Database connection Pool-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <!--Properties of connection pool-->

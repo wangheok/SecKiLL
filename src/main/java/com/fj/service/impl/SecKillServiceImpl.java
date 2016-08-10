@@ -3,6 +3,7 @@ package com.fj.service.impl;
 import ch.qos.logback.core.joran.spi.ConsoleTarget;
 import com.fj.dao.SecKillDao;
 import com.fj.dao.SuccessKilledDao;
+import com.fj.dao.cache.RedisDao;
 import com.fj.dto.Exposer;
 import com.fj.dto.SecKillExecution;
 import com.fj.entity.SecKill;
@@ -34,6 +35,8 @@ public class SecKillServiceImpl implements SecKillService {
     private SecKillDao secKillDao;
     @Autowired
     private SuccessKilledDao successKilledDao;
+    @Autowired
+    private RedisDao redisDao;
 
     // Slat value for encryption
     public final String slat = "nelson#street#Auckland#NZ";
@@ -50,12 +53,28 @@ public class SecKillServiceImpl implements SecKillService {
 
     public Exposer exportSecKillUrl(long secKillId) {
 
-        SecKill secKill = secKillDao.queryById(secKillId);
-
+        // --- Cache Optimization start ---
+        // access redis
+        SecKill secKill = redisDao.getSecKill(secKillId);
         if (secKill == null) {
-
+            // 2. Access database
+            secKill = secKillDao.queryById(secKillId);
+            if (secKill == null) {
+                // false: the seckill does not exist
+                return new Exposer(false, secKillId);
+            } else {
+                // 3. put into redis
+                redisDao.putSecKill(secKill);
+            }
+        }
+        // --- Cache Optimization end ---
+        /*
+        SecKill secKill = secKillDao.queryById(secKillId);
+        if (secKill == null) {
             return new Exposer(false, secKillId);
         }
+        */
+
         Date startTime = secKill.getStartTime();
         Date endTime = secKill.getEndTime();
         Date currentTime = new Date();

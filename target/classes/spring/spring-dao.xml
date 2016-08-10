@@ -7,8 +7,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springfr
 
     <!--Config and reorganize MyBatis-->
     <!--1. Database settings-->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
-
+    <context:property-placeholder location="classpath:jdbc.properties, redis.properties"/>
     <!--2. Database connection Pool-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <!--Properties of connection pool-->
@@ -46,6 +45,12 @@ http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springfr
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
         <!--Providing to be scanned packages of Dao -->
         <property name="basePackage" value="com.fj.dao"></property>
+    </bean>
+
+    <!--Redis Dao Injection-->
+    <bean id="redisDao" class="com.fj.dao.cache.RedisDao">
+        <constructor-arg index="0" value="${redis.address}"/>
+        <constructor-arg index="1" value="${redis.port}"/>
     </bean>
 
 </beans>

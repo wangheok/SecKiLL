@@ -48,4 +48,13 @@ public interface SecKillService {
      */
     SecKillExecution executeSecKill(long secKillId, long userMobile, String md5)
             throws SecKillException, RepeatKillException, SecKillCloseException;
+
+    /**
+     * Execute seckill by stored procedure
+     *
+     * @param secKillId
+     * @param userMobile
+     * @param md5
+     */
+    SecKillExecution executeSecKillProcedure(long secKillId, long userMobile, String md5);
 }

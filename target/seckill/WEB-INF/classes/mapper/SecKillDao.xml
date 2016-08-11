@@ -22,9 +22,19 @@
     </select>
 
     <select id="queryAll" resultType="SecKill">
-      SELECT seckill_id, name, start_time, end_time, create_time
+      SELECT seckill_id, name, number, start_time, end_time, create_time
       FROM seckill
       ORDER BY create_time desc
       limit #{offset},#{limit}
+    </select>
+
+    <!--call stored procedure-->
+    <select id="killByProcedure" statementType="CALLABLE">
+        call EXECUTE_SECKILL(
+          #{secKillId, jdbcType=BIGINT, mode=IN},
+          #{mobile, jdbcType=BIGINT, mode=IN},
+          #{killTime, jdbcType=TIMESTAMP, mode=IN},
+          #{result, jdbcType=INTEGER, mode=OUT}
+        );
     </select>
 </mapper>

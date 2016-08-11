@@ -13,6 +13,7 @@ import com.fj.exception.RepeatKillException;
 import com.fj.exception.SecKillCloseException;
 import com.fj.exception.SecKillException;
 import com.fj.service.SecKillService;
+import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wanghe on 4/08/16.
@@ -111,19 +114,20 @@ public class SecKillServiceImpl implements SecKillService {
         Date purchaseTime = new Date();
 
         try {
-            int updateCount = secKillDao.reduceNumber(secKillId, purchaseTime);
+            // 2. Insert purchase record
+            int insertCount = successKilledDao.insertSuccessKilled(secKillId, userMobile);
 
-            if (updateCount <= 0) {
-                // No update after execution, seckill closed
-                throw new SecKillCloseException("SecKill have been closed!");
-
+            if (insertCount <= 0) {
+                // verify if repeat the seckill purchase
+                throw new RepeatKillException("Repeat purchase!");
             } else {
-                // 2. Insert purchase record
-                int insertCount = successKilledDao.insertSuccessKilled(secKillId, userMobile);
 
-                if (insertCount <= 0) {
-                    // verify if repeat the seckill purchase
-                    throw new RepeatKillException("Repeat purchase!");
+                int updateCount = secKillDao.reduceNumber(secKillId, purchaseTime);
+
+                if (updateCount <= 0) {
+                    // No update after execution, seckill closed
+                    throw new SecKillCloseException("SecKill have been closed!");
+
                 } else {
                     // purchase successfully
                     SuccessKilled successKilled = successKilledDao.queryByIdWithSecKill(secKillId, userMobile);
@@ -137,6 +141,43 @@ public class SecKillServiceImpl implements SecKillService {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new SecKillException("SecKill inner Error!" + e.getMessage());
+        }
+    }
+
+    /**
+     * Execution by stored procedure
+     *
+     * @param secKillId
+     * @param userMobile
+     * @param md5
+     * @return
+     */
+    public SecKillExecution executeSecKillProcedure(long secKillId, long userMobile, String md5) {
+        if (md5 == null || !md5.equals(getMD5(secKillId))) {
+            return new SecKillExecution(secKillId, SecKillStateEnum.DATA_REWRITE);
+        }
+        Date killTime = new Date();
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("secKillId", secKillId);
+        paramMap.put("mobile", userMobile);
+        paramMap.put("killTime", killTime);
+        paramMap.put("result", null);
+
+        try {
+            // After the stored procedure execution, result will be set
+            secKillDao.killByProcedure(paramMap);
+            // Get result
+            int result = MapUtils.getInteger(paramMap, "result", -2);
+            if (result == 1) {
+                SuccessKilled sk = successKilledDao.queryByIdWithSecKill(secKillId, userMobile);
+                return new SecKillExecution(secKillId, SecKillStateEnum.SUCCESS, sk);
+            } else {
+                return new SecKillExecution(secKillId, SecKillStateEnum.stateOf(result));
+            }
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new SecKillExecution(secKillId, SecKillStateEnum.INNER_ERROR);
         }
     }
 

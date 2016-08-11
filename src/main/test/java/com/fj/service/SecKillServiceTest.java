@@ -70,4 +70,16 @@ public class SecKillServiceTest {
             logger.warn("exposer={}", exposer);
         }
     }
+
+    @Test
+    public void testExecuteSecKillProcedure() {
+        long secKillId = 1000;
+        long mobile = 13000001111L;
+        Exposer exposer = secKillService.exportSecKillUrl(secKillId);
+        if (exposer.isExposed()) {
+            String md5 = exposer.getMd5();
+            SecKillExecution secKillExecution = secKillService.executeSecKillProcedure(secKillId, mobile, md5);
+            logger.info(secKillExecution.getStateInfo());
+        }
+    }
 }
